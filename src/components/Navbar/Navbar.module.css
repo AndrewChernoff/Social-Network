@@ -1,0 +1,21 @@
+.links {
+    grid-area: n;
+    background-color: green;
+    padding: 10px;
+  }
+
+.links .item {
+  padding: 10px;
+}  
+
+  .links a {
+    text-decoration: none;
+    color:  white;
+    padding: 20px;
+
+  }
+
+.activeLink {
+  color: gold;
+}
+  
