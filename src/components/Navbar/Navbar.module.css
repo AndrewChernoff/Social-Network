@@ -12,10 +12,13 @@
     text-decoration: none;
     color:  white;
     padding: 20px;
-
   }
 
-.activeLink {
-  color: gold;
-}
-  
+
+  .activeLink {
+    color: gold;
+  }
+ 
+/* .navBar {
+  width: 300px;
+} */

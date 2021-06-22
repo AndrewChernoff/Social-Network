@@ -1,9 +1,11 @@
 .item {
     color: blue;
+    padding: 5px;
 }
 
 .item .img {
     width: 50px;
     height: 25px;
     border-radius: 30px;
+    padding: 5px;
  }
