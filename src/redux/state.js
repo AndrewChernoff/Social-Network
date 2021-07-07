@@ -45,6 +45,8 @@ let store = {
         this._renderEntireTree = observer;
     }
 }
+
+///HELLO
 ////////////////////////////
 
 /* let renderEntireTree = () => {
