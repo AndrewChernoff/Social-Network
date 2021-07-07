@@ -45,7 +45,7 @@ let store = {
         this._renderEntireTree = observer;
     }
 }
-
+////////////////////////////
 
 /* let renderEntireTree = () => {
     alert('state is changed');
