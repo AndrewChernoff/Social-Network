@@ -1,3 +1,7 @@
 .myPosts {
     padding-top: 15px;
 }
+
+.posts .myPostCaption {
+    padding: 10px;
+}
