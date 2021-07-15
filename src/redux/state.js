@@ -1,3 +1,9 @@
+import dialogReducer from "./dialogReducer";
+import profileReducer from "./profileReducer";
+import sideBarReducer from "./sidebarReducer";
+
+
+
 let store = {
     _renderEntireTree() {
         console.log('state is changed');
@@ -40,7 +46,12 @@ let store = {
     },
 
     dispatch (action) {
-        if (action.type === 'Add-Post') {
+        this._state.myPostPage = profileReducer(this._state.myPostPage, action);
+        this._state.DialogsPage = dialogReducer(this._state.DialogsPage,action);
+        this._state.sidebar = sideBarReducer(this._state.sidebar, action)
+        this._renderEntireTree(this._state);
+
+        /* if (action.type === 'Add-Post') {
             let newPost = {
                 id: '3', likeCounter: '0', message: action.message
             }
@@ -60,7 +71,7 @@ let store = {
         } else if (action.type === 'Update-Message-Text') {
             this._state.DialogsPage.inputMessageText = action.newMessage;
             this._renderEntireTree(this._state);
-        }
+        } */
     }
 }
 
@@ -79,9 +90,5 @@ export const sendMessageActionCreator = (text) => {
 export const updateMessageTextActionCreator = (text) => {
     return {type:'Update-Message-Text', newMessage: text}
 }
-
-
-
-
 
 export default store;
