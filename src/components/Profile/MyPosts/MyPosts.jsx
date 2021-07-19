@@ -1,20 +1,22 @@
 import React from 'react';
-import { addPostActionCreator, updatePostTextActionCreator } from '../../../redux/store';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
-    let postElements = props.posts.myPostPage.posts.map(p => <Post likeCounter={p.likeCounter} message={p.message} />);
+    let state = props.state;
+    let postElements = state.myPostPage.posts.map(p => <Post likeCounter={p.likeCounter} message={p.message} />);
+    let postValueText = state.myPostPage.postValueText;
     let messagePost = React.createRef();
 
-    let addPost = () => {
+    let onAddPost = () => {
         let text = messagePost.current.value;
-        props.dispatch(addPostActionCreator(text));
+        props.addPost(text);
     }
 
     let onPostChange = () => {
+        debugger
         let text = messagePost.current.value;
-        props.dispatch(updatePostTextActionCreator(text));
+        props.updatePostText(text)
     }
 
     return (
@@ -23,9 +25,9 @@ const MyPosts = (props) => {
                 My posts
             </div> 
             <div>
-                <textarea ref={messagePost} onChange={onPostChange} value={props.postValueText} placeholder='Enter your post'></textarea>
+                <textarea ref={messagePost} onChange={onPostChange} value={postValueText} placeholder='Enter your post'></textarea>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onAddPost}>Add post</button>
                 </div>
             </div>
 

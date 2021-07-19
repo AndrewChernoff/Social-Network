@@ -3,15 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-//import store from './redux/store';
 import store from './redux-store';
 
 let renderEntireTree = () => {
     ReactDOM.render(
         <React.StrictMode>
-            <App state={store.getState()}
-                inputMessageText={store.getState().DialogsPage.inputMessageText}
-                dispatch={store.dispatch.bind(store)} />
+            <App store={store}/>
         </React.StrictMode>,
         document.getElementById('root')
     );
