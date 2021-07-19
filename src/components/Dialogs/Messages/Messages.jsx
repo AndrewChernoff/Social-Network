@@ -1,5 +1,5 @@
 import React from 'react';
-import { sendMessageActionCreator, updateMessageTextActionCreator } from '../../../redux/state';
+import { sendMessageActionCreator, updateMessageTextActionCreator } from '../../../redux/store';
 import Message from './Message/Message';
 import s from './Messages.module.css';
 

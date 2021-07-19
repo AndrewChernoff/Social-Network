@@ -3,10 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import state, { addPost, subscribe, updatePosText } from './redux/state';
-import store from './redux/state';
-
-
+//import store from './redux/store';
+import store from './redux-store';
 
 let renderEntireTree = () => {
     ReactDOM.render(

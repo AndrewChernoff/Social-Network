@@ -2,8 +2,6 @@ import dialogReducer from "./dialogReducer";
 import profileReducer from "./profileReducer";
 import sideBarReducer from "./sidebarReducer";
 
-
-
 let store = {
     _renderEntireTree() {
         console.log('state is changed');
@@ -50,28 +48,6 @@ let store = {
         this._state.DialogsPage = dialogReducer(this._state.DialogsPage,action);
         this._state.sidebar = sideBarReducer(this._state.sidebar, action)
         this._renderEntireTree(this._state);
-
-        /* if (action.type === 'Add-Post') {
-            let newPost = {
-                id: '3', likeCounter: '0', message: action.message
-            }
-            this._state.myPostPage.posts.push(newPost);
-            this._state.myPostPage.postValueText = '';
-            this._renderEntireTree(this._state);
-        } else if (action.type === 'Update-Post-Text') {
-            this._state.myPostPage.postValueText = action.newMessage;
-            this._renderEntireTree(this._state);
-        } else if (action.type === 'Send-Message') {
-            let newMessage = {
-                message: action.message, id: '3' 
-            }
-            this._state.DialogsPage.message.push(newMessage);
-            this._state.DialogsPage.inputMessageText = '';
-            this._renderEntireTree(this._state);
-        } else if (action.type === 'Update-Message-Text') {
-            this._state.DialogsPage.inputMessageText = action.newMessage;
-            this._renderEntireTree(this._state);
-        } */
     }
 }
 
