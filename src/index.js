@@ -4,12 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux-store';
+import { BrowserRouter } from 'react-router-dom';
+import StoreContext, { Provider } from './StoreConrexr';
 
 let renderEntireTree = () => {
     ReactDOM.render(
-        <React.StrictMode>
-            <App store={store}/>
-        </React.StrictMode>,
+        <BrowserRouter>
+            <Provider store={store}>
+                <App /* store={store} *//>
+            </Provider>
+        </BrowserRouter>,
         document.getElementById('root')
     );
 }
