@@ -3,9 +3,9 @@ import Message from './Message/Message';
 import s from './Messages.module.css';
 
 const Messages = (props) => {
-    let state = props.state;
-    let messageItems = state.DialogsPage.message.map(m => <Message message={m.message} />)
-    let inputMessageText = state.DialogsPage.inputMessageText;
+    //let state = props.state;
+    let messageItems = props.state.message.map(m => <Message message={m.message} />)
+    let inputMessageText = props.state.inputMessageText;
     let messageText = React.createRef();
 
     let onSendMessage = () => {
