@@ -3,9 +3,8 @@ import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
-    let state = props.state;
-    let postElements = state.myPostPage.posts.map(p => <Post likeCounter={p.likeCounter} message={p.message} />);
-    let postValueText = state.myPostPage.postValueText;
+    let postElements = props.postElements.posts.map(p => <Post likeCounter={p.likeCounter} message={p.message} />);
+    let postValueText = props.postElements.postValueText;
     let messagePost = React.createRef();
 
     let onAddPost = () => {
@@ -14,7 +13,6 @@ const MyPosts = (props) => {
     }
 
     let onPostChange = () => {
-        debugger
         let text = messagePost.current.value;
         props.updatePostText(text)
     }
