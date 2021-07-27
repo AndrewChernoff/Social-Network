@@ -3,6 +3,7 @@ import { sendMessageActionCreator, updateMessageTextActionCreator } from '../../
 import StoreContext from '../../../StoreConrexr';
 import Messages from './Messages';
 import {connect} from 'react-redux';
+
 /* const MessagesContainer = (props) => {
     return (
         <StoreContext.Consumer>
