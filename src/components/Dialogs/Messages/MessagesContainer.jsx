@@ -1,5 +1,5 @@
 import React from 'react';
-import { sendMessageActionCreator, updateMessageTextActionCreator } from '../../../redux/store';
+import { sendMessageActionCreator, updateMessageTextActionCreator } from '../../../redux/dialogReducer';
 import StoreContext from '../../../StoreConrexr';
 import Messages from './Messages';
 import {connect} from 'react-redux';
