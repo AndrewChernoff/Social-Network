@@ -1,52 +1,76 @@
 import React from "react";
 import s from './Users.module.css';
+import * as axios from 'axios';
+import userPhoto from '../../assets/images/user.png'
 
-const Users = (props) => {
+class Users extends React.Component {
 
-    if (props.users.length === 0) {
-        props.setUsers([
-
-            {
-                id: 1,
-                userPhoto: 'http://www.body-builder.info/wp-content/uploads/2017/08/d2.jpg',
-                followed: false,
-                fullName: 'Andrew Chernoff',
-                status: 'That\'s not "null" but "undefined", beutiful life, sunshine',
-                location: { country: 'USA', city: 'Los Angeles' }
-            },
-            {
-                id: 2,
-                userPhoto: 'http://www.body-builder.info/wp-content/uploads/2017/08/d2.jpg',
-                followed: false,
-                fullName: 'Serega Rastorguev',
-                status: 'That was it',
-                location: { country: 'USA', city: 'Miami' }
-            },
-            {
-                id: 3,
-                userPhoto: 'http://www.body-builder.info/wp-content/uploads/2017/08/d2.jpg',
-                followed: true,
-                fullName: 'Dmitry Uspeshny',
-                status: 'wine, fish, nature',
-                location: { country: 'Spain', city: 'Ibiza' }
-            },
-            {
-                id: 4,
-                userPhoto: 'http://www.body-builder.info/wp-content/uploads/2017/08/d2.jpg',
-                followed: true,
-                fullName: 'Ali Abdulloev',
-                status: 'Asalam Aleikum, pharmacists',
-                location: { country: 'Germany', city: 'Berlin' }
+    componentDidMount() {
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+            if (this.props.users.length === 0) {
+                this.props.setUsers(response.data.items);
             }
-        ])
+        })
+    }
+
+    render() {
+        return (
+            <div>
+                {this.props.users.map(u => (
+                    <div className={s.findUsersPage} key={u.id}>
+
+                        <div> <img src={u.photos.small != null ? u.photos.small : userPhoto} /> </div>
+
+                        <div>
+                            {u.followed
+                                ? <button onClick={() => { this.props.unfollow(u.id) }}>unfollow</button>
+                                : <button onClick={() => { this.props.follow(u.id) }}>follow</button>}
+                        </div>
+
+
+                        <div>
+                            {u.name}
+                        </div>
+
+                        <div>
+                            {u.status}
+                        </div>
+
+                        <div>
+                            {'u.location.country'}
+                        </div>
+
+                        <div>
+                            {'u.location.city'}
+                        </div>
+
+                    </div>
+                )
+                )
+                }
+
+            </div>
+        )
+    }
+}
+export default Users
+
+/* const Users = (props) => {
+    let getUsers = () => {
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+            if (props.users.length === 0) {
+                props.setUsers(response.data.items);
+            }
+        })
     }
 
     return (
         <div>
+            <button onClick={getUsers}>get users</button>
             {props.users.map(u => (
                 <div className={s.findUsersPage} key={u.id}>
 
-                    <div> <img src={u.userPhoto} /> </div>
+                    <div> <img src={u.photos.small != null ? u.photos.small : userPhoto} /> </div>
 
                     <div>
                         {u.followed
@@ -56,7 +80,7 @@ const Users = (props) => {
 
 
                     <div>
-                        {u.fullName}
+                        {u.name}
                     </div>
 
                     <div>
@@ -64,11 +88,11 @@ const Users = (props) => {
                     </div>
 
                     <div>
-                        {u.location.country}
+                        {'u.location.country'}
                     </div>
 
                     <div>
-                        {u.location.city}
+                        {'u.location.city'}
                     </div>
 
                 </div>
@@ -80,4 +104,4 @@ const Users = (props) => {
     )
 }
 
-export default Users
+export default Users */
