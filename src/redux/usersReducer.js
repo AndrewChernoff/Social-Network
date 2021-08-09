@@ -1,42 +1,14 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
-const SET_USERS = 'SETU_SERS';
+const SET_USERS = 'SET_USERS';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT';
 
 let initialState = {
-    users: [/* 
-        {
-            id: 1, 
-            userPhoto: 'http://www.body-builder.info/wp-content/uploads/2017/08/d2.jpg',
-            followed: false,
-            fullName: 'Andrew Chernoff',
-            status: 'That\'s not "null" but "undefined", beutiful life, sunshine',
-            location: { country: 'USA', city: 'Los Angeles' }
-        },
-        {
-            id: 2,
-            userPhoto: 'http://www.body-builder.info/wp-content/uploads/2017/08/d2.jpg',
-            followed: false,
-            fullName: 'Serega Rastorguev',
-            status: 'That was it',
-            location: { country: 'USA', city: 'Miami' }
-        },
-        {
-            id: 3,
-            userPhoto: 'http://www.body-builder.info/wp-content/uploads/2017/08/d2.jpg',
-            followed: true,
-            fullName: 'Dmitry Uspeshny',
-            status: 'wine, fish, nature',
-            location: { country: 'Spain', city: 'Ibiza' }
-        },
-        {
-            id: 4,
-            userPhoto: 'http://www.body-builder.info/wp-content/uploads/2017/08/d2.jpg',
-            followed: true,
-            fullName: 'Ali Abdulloev',
-            status: 'Asalam Aleikum, pharmacists',
-            location: { country: 'Germany', city: 'Berlin' }
-        } */
-    ]
+    users: [],
+    pageSize: 5,
+    totalUsersCount: 0,
+    currentPage: 4
 }
 
 export const usersReducer = (state = initialState, action) => {
@@ -66,12 +38,30 @@ export const usersReducer = (state = initialState, action) => {
         case SET_USERS:
             return {
                 ...state,
-                users: [...state.users, ...action.users] 
+                users: action.users 
+            
             }
+
+        case SET_CURRENT_PAGE:
+            return {
+                ...state,
+                currentPage: action.currentPage 
+            }
+
+        case SET_USERS_TOTAL_COUNT:
+            return {
+                ...state,
+                totalUsersCount: action.count 
+            }
+
     }
+
     return state;
 }
+
 
 export const followAC = (userID) => { return { type: FOLLOW, userID } };
 export const unfollowAC = (userID) => { return { type: UNFOLLOW, userID } };
 export const setUsersAC = (users) => { return { type: SET_USERS, users } };
+export const setCurrentPagesAC = (currentPage) => { return { type: SET_CURRENT_PAGE, currentPage } };
+export const setUsersTotalCountAC = (totalCount) => { return { type: SET_USERS_TOTAL_COUNT, count: totalCount } };
