@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import Users from "./Users";
 import * as axios from 'axios';
 
-
 let mapStateToProps = (state) => {
     return {
         users: state.usersPage.users,
@@ -15,21 +14,11 @@ let mapStateToProps = (state) => {
     }
 }
 
-/* let mapDispatchToProps = (dispatch) => {
-    return {
-        follow: (userID) => { dispatch(followAC(userID)) },
-        unfollow: (userID) => { dispatch(unfollowAC(userID)) },
-        setUsers: (users) => { dispatch(setUsersAC(users)) },
-        setCurrentPages: (pageNumber) => { dispatch(setCurrentPagesAC(pageNumber)) },
-        setUsersTotalCount: (totalCount) => { dispatch(setUsersTotalCountAC(totalCount)) },
-        toggleIsFetching: (isFetching) => { dispatch(toggleIsFetchingAC(isFetching)) },
-    }
-}
- */
 class UsersContainer extends React.Component {
     componentDidMount() {
         this.props.toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`)
+        .then(response => {
             this.props.toggleIsFetching(false);
             this.props.setUsers(response.data.items);
             this.props.setUsersTotalCount(response.data.totalCount);
@@ -39,7 +28,8 @@ class UsersContainer extends React.Component {
     onPageChanged = (pageNumber) => {
         this.props.toggleIsFetching(true);
         this.props.setCurrentPages(pageNumber);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNumber}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNumber}`)
+        .then(response => {
             this.props.toggleIsFetching(false);
             this.props.setUsers(response.data.items);
         })
@@ -58,5 +48,7 @@ class UsersContainer extends React.Component {
     }
 }
 
-export default connect(mapStateToProps, {follow, unfollow, setUsers, setCurrentPages, setUsersTotalCount,
-    toggleIsFetching})(UsersContainer);
+export default connect(mapStateToProps, {
+    follow, unfollow, setUsers, setCurrentPages, setUsersTotalCount,
+    toggleIsFetching
+})(UsersContainer);

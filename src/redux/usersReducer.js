@@ -60,6 +60,8 @@ export const usersReducer = (state = initialState, action) => {
         return {... state,
             isFetching: action.isFetching
         }
+
+        
     }
 
     return state;
