@@ -1,37 +1,35 @@
 import React from 'react';
 import Profile from '../Profile';
 import * as axios from 'axios';
-import { setUserProfileAC } from '../../../redux/profileReducer';
+import { setUserProfile } from '../../../redux/profileReducer';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 class ProfileContainer extends React.Component {
-    
-componentDidMount() {
-    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`).then(response => {
+    componentDidMount() {
         debugger
-    this.props.setUserProfile(response.data)
-    })
-}
+        let userId = this.props.match.params.userId;
+        if(!userId) {
+            userId = 2;
+        }
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then(response => {
+            this.props.setUserProfile(response.data)
+        })
+    }
 
     render() {
-        debugger
         return (
-            <Profile {...this.props} profile={this.props.profile}/>
+            <Profile {...this.props} profile={this.props.profile} />
         )
     }
 }
-////////////
-let mapStateToProps = (state) => {
-    debugger
-return {
-     profile: state.myPostPage.profile
-}
-}
 
-let mapDispatchToProps = (dispatch) => {
+let mapStateToProps = (state) => {
     return {
-        setUserProfile: (profile) => (dispatch(setUserProfileAC(profile)))
+        profile: state.myPostPage.profile
     }
 }
 
-export default connect (mapStateToProps, mapDispatchToProps)(ProfileContainer)
+let WithUrlDataContainerComponent = withRouter(ProfileContainer);
+
+export default connect(mapStateToProps, { setUserProfile })(WithUrlDataContainerComponent)

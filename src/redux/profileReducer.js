@@ -48,7 +48,7 @@ export const updatePostTextActionCreator = (text) => {
     return { type: 'Update-Post-Text', newMessage: text }
 }
 
-export const setUserProfileAC = (profile) => { return { type: SET_USER_PROFILE, profile } };
+export const setUserProfile = (profile) => { return { type: SET_USER_PROFILE, profile } };
 
 
 export default profileReducer;
