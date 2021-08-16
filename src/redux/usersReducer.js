@@ -26,7 +26,7 @@ export const usersReducer = (state = initialState, action) => {
                 })
             }
 
-        case UNFOLLOW:
+        case UNFOLLOW: 
             return {
                 ...state,
                 users: state.users.map(u => {
@@ -65,9 +65,9 @@ export const usersReducer = (state = initialState, action) => {
     return state;
 }
 
-export const followAC = (userID) => { return { type: FOLLOW, userID } };
-export const unfollowAC = (userID) => { return { type: UNFOLLOW, userID } };
-export const setUsersAC = (users) => { return { type: SET_USERS, users } };
-export const setCurrentPagesAC = (currentPage) => { return { type: SET_CURRENT_PAGE, currentPage } };
-export const setUsersTotalCountAC = (totalCount) => { return { type: SET_USERS_TOTAL_COUNT, count: totalCount } };
-export const toggleIsFetchingAC = (isFetching) => { return { type: TOGGLE_FETCHING, isFetching } };
+export const follow = (userID) => { return { type: FOLLOW, userID } };
+export const unfollow = (userID) => { return { type: UNFOLLOW, userID } };
+export const setUsers = (users) => { return { type: SET_USERS, users } };
+export const setCurrentPages = (currentPage) => { return { type: SET_CURRENT_PAGE, currentPage } };
+export const setUsersTotalCount = (totalCount) => { return { type: SET_USERS_TOTAL_COUNT, count: totalCount } };
+export const toggleIsFetching = (isFetching) => { return { type: TOGGLE_FETCHING, isFetching } };
