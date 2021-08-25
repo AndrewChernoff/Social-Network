@@ -1,7 +1,9 @@
 import userPhoto from '../../assets/images/user.png';
 import s from './Users.module.css';
 import Preloader from '../common/Preloader';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+import { followUser, unfollowUser } from '../../API/api';
 
 const Users = (props) => {
     let pageCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -25,13 +27,30 @@ const Users = (props) => {
 
             {props.users.map(u => (
                 <div className={s.findUsersPage} key={u.id}>
-                    <NavLink to={'profile/'+ u.id}>
+                    <NavLink to={'profile/' + u.id}>
                         <div> <img src={u.photos.small != null ? u.photos.small : userPhoto} /> </div>
                     </NavLink>
                     <div>
                         {u.followed
-                            ? <button onClick={() => { props.unfollow(u.id) }}>unfollow</button>
-                            : <button onClick={() => { props.follow(u.id) }}>follow</button>}
+                            ? <button onClick={() => {
+                             unfollowUser(u.id)
+                                    .then(response => {
+                                        if (response.data.resultCode === 0) {
+                                            props.unfollow(u.id)
+                                        }
+                                    })
+
+
+                            }}>unfollow</button>
+                            : <button onClick={() => {
+                         followUser(u.id).then(response => {
+                                    if(response.data.resultCode === 0){
+                                        props.follow(u.id);
+                                    }
+                                })
+                                
+
+                            }}>follow</button>}
                     </div>
 
                     <div>
