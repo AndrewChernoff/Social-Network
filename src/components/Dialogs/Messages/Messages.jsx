@@ -16,7 +16,7 @@ const Messages = (props) => {
         let text = messageText.current.value;
         props.updateMessage(text);
     }
-    
+
     return (
         <div className={s.messages}>
             {messageItems}

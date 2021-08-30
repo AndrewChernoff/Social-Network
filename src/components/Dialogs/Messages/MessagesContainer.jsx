@@ -1,30 +1,8 @@
-import React from 'react';
 import { sendMessageActionCreator, updateMessageTextActionCreator } from '../../../redux/dialogReducer';
-import StoreContext from '../../../StoreConrexr';
 import Messages from './Messages';
 import {connect} from 'react-redux';
+import { WithAuthRedirectComponent } from '../../HOC/WithAuthRedirect';
 
-/* const MessagesContainer = (props) => {
-    return (
-        <StoreContext.Consumer>
-            {store => {
-                let state = store.getState();
-
-                let sendMessage = (text) => {
-                    store.dispatch(sendMessageActionCreator(text));
-                }
-
-                let onClickButtonChange = (text) => {
-                    store.dispatch(updateMessageTextActionCreator(text));
-                }
-                return <Messages sendMessage={sendMessage} updateMessage={onClickButtonChange}
-                state={state.DialogsPage}
-                 />
-            }
-            }
-        </StoreContext.Consumer>
-    )
-} */
 let mapStateToProps = (state) => {
     return {
         state: state.DialogsPage
@@ -42,6 +20,8 @@ let mapDispatchToProps = (dispatch) => {
     }
 }
 
-const MessagesContainer = connect(mapStateToProps, mapDispatchToProps)(Messages);
+let authRedirectComponent = WithAuthRedirectComponent(Messages);
+
+const MessagesContainer = connect(mapStateToProps, mapDispatchToProps)(authRedirectComponent);
 
 export default MessagesContainer;
