@@ -3,7 +3,7 @@ import Message from './Message/Message';
 import s from './Messages.module.css';
 
 const Messages = (props) => {
-    let messageItems = props.state.message.map(m => <Message message={m.message} />)
+    let messageItems = props.state.message.map(m => <Message message={m.message} key={m.id} />)
     let inputMessageText = props.state.inputMessageText;
     let messageText = React.createRef();
 
