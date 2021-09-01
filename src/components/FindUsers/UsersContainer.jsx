@@ -1,11 +1,12 @@
 import React from "react";
-import { follow, unfollow, getUser} from "../../redux/usersReducer";
+import { follow, unfollow, getUser } from "../../redux/usersReducer";
 import { connect } from 'react-redux'
 import Users from "./Users";
 import { WithAuthRedirectComponent } from "../HOC/WithAuthRedirect";
+import { compose } from 'redux';
 
 let mapStateToProps = (state) => {
-    
+
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
@@ -20,7 +21,7 @@ class UsersContainer extends React.Component {
     componentDidMount() {
         this.props.getUser(this.props.pageSize, this.props.currentPage);
     }
-    
+
     onPageChanged = (pageNumber) => {
         this.props.getUser(this.props.pageSize, pageNumber);
     }
@@ -40,4 +41,9 @@ class UsersContainer extends React.Component {
     }
 }
 
-export default WithAuthRedirectComponent(connect(mapStateToProps, {follow, unfollow, getUser})(UsersContainer));
+//export default WithAuthRedirectComponent(connect(mapStateToProps, { follow, unfollow, getUser })(UsersContainer));
+
+export default compose (
+    WithAuthRedirectComponent,
+    connect(mapStateToProps, { follow, unfollow, getUser }) )
+(UsersContainer)  
