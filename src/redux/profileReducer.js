@@ -1,8 +1,11 @@
-import { UserAPI } from "../API/api";
+import { profileAPI, UserAPI } from "../API/api";
 
 const Add_Post = 'Add-Post';
 const Update_Post_Text = 'Update-Post-Text';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_USER_STATUS = 'SET_USER_STATUS';
+//const UPDATE_USER_STATUS = 'UPDATE_USER_STATUS';
+
 
 let initialState = {
     posts: [
@@ -10,10 +13,12 @@ let initialState = {
         { id: '2', likeCounter: '10', message: "Hi, it's my 1st post" },
     ],
     postValueText: '',
-    profile: null
+    profile: null,
+    status: ''
 }
 
 const profileReducer = (state = initialState, action) => {
+    
     switch (action.type) {
         case Add_Post:
             let newPost = {
@@ -37,6 +42,19 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 profile: action.profile
             }
+            debugger
+        case SET_USER_STATUS:
+            return {
+                
+                ...state,
+                status: action.status
+            }
+
+     /*    case UPDATE_USER_STATUS:
+            return {
+                ...state,
+                status: action.status
+            } */
     }
     return state
 }
@@ -50,11 +68,30 @@ export const updatePostTextActionCreator = (text) => {
 }
 
 export const setUserProfile = (profile) => { return { type: SET_USER_PROFILE, profile } };
+export const setUserStatus = (status) => { return { type: SET_USER_STATUS, status } };
 
 export const getUserProfile = (userId) => (dispatch) => {
     UserAPI.getProfile(userId).then(response => {
+        debugger
         dispatch(setUserProfile(response.data));
     })
-}  
+}
+
+export const getUserStatus = (userId) => (dispatch) => {
+    profileAPI.getStatus(userId).then(response => {
+        debugger
+        dispatch(setUserStatus(response.data));
+    })
+}
+
+export const updateUserStatus = (status) => (dispatch) => {
+    profileAPI.updateStatus(status).then(response => {
+        if (response.data.resultCode === 0) {
+            debugger
+            dispatch(setUserStatus(status));
+        }
+    })
+}
+
 
 export default profileReducer;
