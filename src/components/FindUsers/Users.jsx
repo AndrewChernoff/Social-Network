@@ -2,7 +2,6 @@ import userPhoto from '../../assets/images/user.png';
 import s from './Users.module.css';
 import Preloader from '../common/Preloader';
 import { NavLink } from 'react-router-dom';
-import { UserAPI } from '../../API/api';
 
 const Users = (props) => {
     let pageCount = Math.ceil(props.totalUsersCount / props.pageSize);

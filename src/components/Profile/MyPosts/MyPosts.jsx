@@ -1,38 +1,47 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
+import { Field, Form } from 'react-final-form';
+import {required, composeValidators, minValue, maxValue} from './../../../Validation/validator'
+import { Textarea } from '../../../Validation/FormControl';
 
 const MyPosts = (props) => {
     let postElements = props.postElements.posts.map(p => <Post likeCounter={p.likeCounter} message={p.message} />);
-    let postValueText = props.postElements.postValueText;
-    let messagePost = React.createRef();
 
-    let onAddPost = () => {
-        let text = messagePost.current.value;
+    let onAddPost = (e) => {
+        debugger
+        let text = e.text;
         props.addPost(text);
-    }
-
-    let onPostChange = () => {
-        let text = messagePost.current.value;
-        props.updatePostText(text)
     }
 
     return (
         <div className={s.posts}>
             <div className={s.myPostCaption}>
                 My posts
-            </div> 
-            <div>
-                <textarea ref={messagePost} onChange={onPostChange} value={postValueText} placeholder='Enter your post'></textarea>
-                <div>
-                    <button onClick={onAddPost}>Add post</button>
-                </div>
             </div>
-
+            <MyPostsForm onAddPost={onAddPost}/>
             <div className={s.myPosts}>
                 {postElements}
             </div>
         </div>
+    )
+}
+
+const MyPostsForm = (props) => {
+    return (
+        <Form
+            onSubmit={props.onAddPost}
+            render={({ handleSubmit }) => (
+                <form onSubmit={handleSubmit}> 
+                    <div>
+                        <Field name="text" component={Textarea} validate={composeValidators(required, minValue(1), maxValue(15))} 
+                            placeholder={'Create post'}
+                        />
+                    </div>
+                    <button type="submit">Add post</button>
+                </form>
+            )}
+        />
     )
 }
 
