@@ -10,3 +10,7 @@
 .errorSpan {
     color: red;
 }
+
+.wrongLogin {
+    color: red;
+}

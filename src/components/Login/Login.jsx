@@ -4,6 +4,7 @@ import { required } from "../../Validation/validator";
 import { connect } from 'react-redux';
 import { loginUser } from "../../redux/authReducer";
 import { Redirect } from 'react-router-dom'
+import s from '../../Validation/FormControl.module.css';
 
 const Login = (props) => {
 
@@ -12,6 +13,8 @@ const Login = (props) => {
     }
 
     if (props.isAuth) return <Redirect to='/profile' />
+
+    let wrongLogin = props.isWrongLogin
 
     return (
         <div>
@@ -25,12 +28,15 @@ const Login = (props) => {
                         </div>
 
                         <div>
-                            <Field name="password" component={Input} placeholder="password" validate={required} />
+                            <Field name="password" component={Input} type='password' placeholder="password" validate={required} />
                         </div>
 
                         <div>
                             <Field name="rememberMe" component="input" type="checkbox" placeholder="First Name" /> remember me
                         </div>
+
+                        {wrongLogin ? <div className={s.wrongLogin}> Wrong email or password </div> : undefined}
+
                         <button type="submit">Login</button>
                     </form>
                 )}
@@ -42,7 +48,8 @@ const Login = (props) => {
 
 let mapStateToProps = (state) => {
     return {
-        isAuth: state.userAuth.isAuth
+        isAuth: state.userAuth.isAuth,
+        isWrongLogin: state.userAuth.isWrongLogin
     }
 }
 

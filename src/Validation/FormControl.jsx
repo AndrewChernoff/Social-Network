@@ -5,7 +5,7 @@ export const Form = (Element) => {
         let hasError = meta.error && meta.touched 
         return (
             <div>
-                <Element className={hasError && s.formControl} {...input} {...props} type="text"/>
+                <Element className={hasError && s.formControl} {...input} {...props} />
                 {hasError && <span className={s.errorSpan}>{meta.error}</span>}
             </div>
         )
