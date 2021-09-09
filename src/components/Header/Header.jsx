@@ -3,9 +3,14 @@ import s from './Header.module.css';
 import { NavLink } from 'react-router-dom';
 
 const Header = (props) => {
+ 
+    let logOut = () => {
+        props.logoutUser()
+    }
+     
     return (
         <div className={s.header}>
-        {props.isAuth === true? <div className={s.loginBlock}> {props.login} </div>: <div className={s.loginBlock}><NavLink to='/login'> Login </NavLink> </div>}
+         {props.isAuth === true? <div className={s.loginBlock}> {props.login} - <button  onClick={logOut}> Logout </button> </div>: <div className={s.loginBlock}><NavLink to='/login'> Login </NavLink> </div>}
         
 
             <header>
