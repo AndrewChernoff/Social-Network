@@ -10,12 +10,14 @@ class ProfileStatus extends React.Component {
     
 
     activateMode = () => {
+        debugger
         this.setState({
             editMode: true
         })
     }
 
     deactivateMode = (e) => {
+        debugger
         this.setState({
             editMode: false
         })
@@ -23,6 +25,7 @@ class ProfileStatus extends React.Component {
     }
 
     onStatusChange = (e) => {
+        debugger
         let updatedStatus = e.currentTarget.value
         this.setState({
             status: updatedStatus
@@ -30,6 +33,7 @@ class ProfileStatus extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        debugger
         if (prevProps !== this.props) {
             this.setState({
                 status: this.props.status
@@ -39,7 +43,7 @@ class ProfileStatus extends React.Component {
 
 
     render() {
-        
+        debugger
         return (
             <div>
                 {!this.state.editMode &&

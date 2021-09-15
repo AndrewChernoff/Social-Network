@@ -5,6 +5,7 @@ import profileReducer from './redux/profileReducer';
 import sideBarReducer from './redux/sidebarReducer';
 import { usersReducer } from './redux/usersReducer';
 import thunk from 'redux-thunk';
+import { appReducer } from './redux/appReducer';
 
 
 let reducers = combineReducers({
@@ -12,7 +13,8 @@ let reducers = combineReducers({
     myPostPage: profileReducer,
     sidebar: sideBarReducer,
     usersPage: usersReducer,
-    userAuth: authReducer
+    userAuth: authReducer,
+    app: appReducer
 })
 
 

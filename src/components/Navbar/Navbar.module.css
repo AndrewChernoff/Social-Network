@@ -15,10 +15,7 @@
   }
 
 
-  .activeLink {
+  .links .item  .activeLink {
     color: gold;
   }
  
-/* .navBar {
-  width: 300px;
-} */
