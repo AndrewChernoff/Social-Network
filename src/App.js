@@ -16,7 +16,6 @@ import { initializeApp } from './redux/appReducer';
 import Preloader from './components/common/Preloader';
 
 class App extends React.Component {
-
   componentDidMount() {
     this.props.initializeApp();
   }

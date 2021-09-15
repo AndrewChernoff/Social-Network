@@ -1,6 +1,6 @@
 import React from 'react';
 import Preloader from '../../common/Preloader';
-import ProfileStatus from '../ProfileStatus/ProfileStatus';
+import ProfileStatusWithHooks from '../ProfileStatus/ProfileStatusWithHooks';
 import s from './ProfileInfo.module.css';
 
 const ProfileInfo = (props) => {
@@ -10,14 +10,15 @@ const ProfileInfo = (props) => {
 
     return (
         <div>
-            <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLoEZze506DadKM0N7fUra7CyYdVLAP7Q7xA&usqp=CAU' />
+            <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLoEZze506DadKM0N7fUra7CyYdVLAP7Q7xA&usqp=CAU' alt='#'/>
 
             <div className={s.description}>
             <img src={props.profile.photos.large} style={{ width: 250 }} alt='userAva' />
               <div> description + ava </div>
             </div>
             
-            <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
+            <ProfileStatusWithHooks status={props.status} updateUserStatus={props.updateUserStatus}/>
+
             <div>Full name: {props.profile.fullName}</div>
             <div>About me: {props.profile.aboutMe}</div>
             <div>Facebook: {props.profile.contacts.facebook}</div>
