@@ -1,11 +1,12 @@
+import { Field } from 'react-final-form'
 import s from './../Validation/FormControl.module.css'
 
 export const Form = (Element) => {
-     const FormElelment = ({ input, meta, ...props }) => {
-        let hasError = meta.error && meta.touched 
+    const FormElelment = ({ input, meta, ...props }) => {
+        let hasError = meta.error && meta.touched
         return (
             <div>
-                <Element className={hasError && s.formControl} {...input} {...props} />
+                <Element className={hasError ? s.formControl : undefined} {...input} {...props} />
                 {hasError && <span className={s.errorSpan}>{meta.error}</span>}
             </div>
         )
@@ -13,7 +14,11 @@ export const Form = (Element) => {
     return FormElelment
 }
 
+export const Textarea = Form('textarea');
+export const Input = Form('input');
 
-
- export const Textarea = Form('textarea');
- export const Input = Form('input');
+export const createForm = (name, component, placeholder, validate, type, wrighting) => {
+    return <div>
+        <Field name={name} component={component} placeholder={placeholder} validate={validate} type={type} /> {wrighting}
+    </div>
+}

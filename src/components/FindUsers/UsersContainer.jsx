@@ -19,11 +19,13 @@ let mapStateToProps = (state) => {
 
 class UsersContainer extends React.Component {
     componentDidMount() {
-        this.props.getUser(this.props.pageSize, this.props.currentPage);
+        let { pageSize, currentPage } = this.props
+        this.props.getUser(pageSize, currentPage);
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.getUser(this.props.pageSize, pageNumber);
+        let { pageSize } = this.props
+        this.props.getUser(pageSize, pageNumber);
     }
 
     render() {
@@ -41,7 +43,7 @@ class UsersContainer extends React.Component {
     }
 }
 
-export default compose (
+export default compose(
     WithAuthRedirectComponent,
-    connect(mapStateToProps, { follow, unfollow, getUser }) )
-(UsersContainer)  
+    connect(mapStateToProps, { follow, unfollow, getUser }))
+    (UsersContainer)

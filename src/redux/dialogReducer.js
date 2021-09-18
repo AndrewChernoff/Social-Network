@@ -15,22 +15,23 @@ let initialState = {
     ]
 }
 
-const dialogReducer = (state=initialState, action) => {
+const dialogReducer = (state = initialState, action) => {
     switch (action.type) {
-        case Send_Message: 
+        case Send_Message:
             let newMessage = {
                 message: action.text, id: '3'
             }
-            return {...state,
+            return {
+                ...state,
                 message: [...state.message, newMessage],
             }
-                
+
     }
     return state
 }
 
 export const sendMessageActionCreator = (text) => {
-    return {type:'Send-Message',  text}
+    return { type: Send_Message, text }
 }
 
 

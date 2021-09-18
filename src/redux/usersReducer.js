@@ -1,4 +1,5 @@
 import { UserAPI } from "../API/api";
+import { updateObjectInArray } from "../components/common/object-helpers";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -22,23 +23,25 @@ export const usersReducer = (state = initialState, action) => {
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
+                users: updateObjectInArray(state.users, action.userID, 'id', { followed: true })
+                /* state.users.map(u => {
                     if (u.id === action.userID) {
                         return { ...u, followed: true }
                     }
                     return u;
-                })
+                }) */
             }
 
         case UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
+                users: updateObjectInArray(state.users, action.userID, ['id'], { followed: false })
+                /* state.users.map(u => {
                     if (u.id === action.userID) {
                         return { ...u, followed: false }
                     }
                     return u;
-                })
+                }) */
             }
 
         case SET_USERS:
@@ -85,39 +88,47 @@ export const toggleIsFetching = (isFetching) => { return { type: TOGGLE_FETCHING
 export const toggleFollowingProgress = (isFetching, userID) => { return { type: TOGGLE_FOLLOWINGPROGRESS, isFetching, userID } };
 
 export const getUser = (pageSize, currentPage) => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(toggleIsFetching(true));
-        UserAPI.getUsers(pageSize, currentPage)
-            .then(response => {
-                dispatch(toggleIsFetching(false));
-                dispatch(setUsers(response.data.items));
-                dispatch(setUsersTotalCount(response.data.totalCount));
-                dispatch(setCurrentPages(currentPage));////
-            })
+        let response = await UserAPI.getUsers(pageSize, currentPage)
+        dispatch(toggleIsFetching(false));
+        dispatch(setUsers(response.data.items));
+        dispatch(setUsersTotalCount(response.data.totalCount));
+        dispatch(setCurrentPages(currentPage));
+    }
+}
+
+export const followUnfollowFlow = (userId, APImethod, actionCreator) => {
+    return async dispatch => {
+        dispatch(toggleFollowingProgress(true, userId))
+        let response = await APImethod(userId)
+        if (response.data.resultCode === 0) {
+            dispatch(actionCreator(userId))
+        }
+        dispatch(toggleFollowingProgress(false, userId))
     }
 }
 
 export const unfollow = (userId) => {
-    return dispatch => {
+    return followUnfollowFlow(userId, UserAPI.unfollowUser, unfollowSuccess)
+    /* return async dispatch => {
         dispatch(toggleFollowingProgress(true, userId))
-        UserAPI.unfollowUser(userId)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(unfollowSuccess(userId))
-                }
-                dispatch(toggleFollowingProgress(false, userId))
-            })
-    }
+        let response = await UserAPI.unfollowUser(userId)
+        if (response.data.resultCode === 0) {
+            dispatch(unfollowSuccess(userId))
+        }
+        dispatch(toggleFollowingProgress(false, userId))
+    } */
 }
 
 export const follow = (userId) => {
-    return dispatch => {
+    return followUnfollowFlow(userId, UserAPI.followUser, followSuccess)
+    /* return async dispatch => {
         dispatch(toggleFollowingProgress(true, userId))
-        UserAPI.followUser(userId).then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(followSuccess(userId));
-            }
-            dispatch(toggleFollowingProgress(false, userId))
-        })
-    }
+        let response = await UserAPI.followUser(userId)
+        if (response.data.resultCode === 0) {
+            dispatch(followSuccess(userId));
+        }
+        dispatch(toggleFollowingProgress(false, userId))
+    } */
 }

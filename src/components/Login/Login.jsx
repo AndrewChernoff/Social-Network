@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { loginUser } from "../../redux/authReducer";
 import { Redirect } from 'react-router-dom'
 import s from '../../Validation/FormControl.module.css';
+import { createForm } from "../../Validation/FormControl";
 
 const Login = (props) => {
-
     let onSubmit = (e) => {
         props.loginUser(e.email, e.password, e.rememberMe)
     }
@@ -23,17 +23,12 @@ const Login = (props) => {
                 render={({ handleSubmit }) => (
                     <form onSubmit={handleSubmit}>
                         <h2>Login</h2>
-                        <div>
-                            <Field name="email" component={Input} placeholder="email" validate={required} />
-                        </div>
 
-                        <div>
-                            <Field name="password" component={Input} type='password' placeholder="password" validate={required} />
-                        </div>
+                        {createForm('email', Input, 'email', required, null, null)}
 
-                        <div>
-                            <Field name="rememberMe" component="input" type="checkbox" placeholder="First Name" /> remember me
-                        </div>
+                        {createForm('password', Input, 'password', required, 'password', null)}
+
+                        {createForm('rememberMe', Input, null, null, 'checkbox', 'remember me')}
 
                         {wrongLogin ? <div className={s.wrongLogin}> Wrong email or password </div> : undefined}
 

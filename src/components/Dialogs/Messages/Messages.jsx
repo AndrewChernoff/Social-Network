@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, Form } from 'react-final-form';
 import Message from './Message/Message';
 import s from './Messages.module.css';
-import {required, composeValidators, minValue, maxValue} from './../../../Validation/validator';
+import { required, composeValidators, minValue, maxValue } from './../../../Validation/validator';
 import { Textarea } from '../../../Validation/FormControl';
 
 const Messages = (props) => {
@@ -32,7 +32,8 @@ const MessagesForm = (props) => {
             render={({ handleSubmit }) => (
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <Field name="message"  placeholder={"Enter your message"} component={Textarea}  validate={composeValidators(required, minValue(1), maxValue(15))}/>
+                        <Field name="message" placeholder={"Enter your message"} component={Textarea}
+                            validate={composeValidators(required, minValue(1), maxValue(15))} />
                     </div>
                     <button type="submit">Send</button>
                 </form>
