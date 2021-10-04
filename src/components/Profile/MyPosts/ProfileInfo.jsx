@@ -3,27 +3,33 @@ import Preloader from '../../common/Preloader';
 import ProfileStatusWithHooks from '../ProfileStatus/ProfileStatusWithHooks';
 import s from './ProfileInfo.module.css';
 
-const ProfileInfo = (props) => {
-    if (!props.profile) {
+const ProfileInfo = ({ profile, status, updateUserStatus, isOwner, savePhoto }) => {
+    if (!profile) {
         return <Preloader />
+    }
+
+    const onAvaChange = (e) => {
+        if (e.target.files.length) {
+            savePhoto(e.target.files[0])
+        }
     }
 
     return (
         <div>
-            <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLoEZze506DadKM0N7fUra7CyYdVLAP7Q7xA&usqp=CAU' alt='#'/>
-
             <div className={s.description}>
-            <img src={props.profile.photos.large} style={{ width: 250 }} alt='userAva' />
-              <div> description + ava </div>
+                <img src={profile.photos.large} className={s.photo} alt='user ava' />
+                <div className={s.sendFile}>
+                    {isOwner && <input type="file" onChange={onAvaChange} />}
+                </div>
             </div>
-            
-            <ProfileStatusWithHooks status={props.status} updateUserStatus={props.updateUserStatus}/>
 
-            <div>Full name: {props.profile.fullName}</div>
-            <div>About me: {props.profile.aboutMe}</div>
-            <div>Facebook: {props.profile.contacts.facebook}</div>
-            <div>Looking for a job: {props.profile.lookingForAJobDescription}</div>
-            <div>User id: {props.profile.userId}</div>
+            <ProfileStatusWithHooks status={status} updateUserStatus={updateUserStatus} />
+
+            <div>Full name: {profile.fullName}</div>
+            <div>About me: {profile.aboutMe}</div>
+            <div>My skills: {profile.lookingForAJobDescription}</div>
+            <div>Facebook: {profile.contacts.facebook}</div>
+            <div>User id: {profile.userId}</div>
         </div>
     )
 }

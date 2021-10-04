@@ -23,25 +23,35 @@ export let UserAPI = {
         return instance.delete(`follow/${userId}`)
     },
 
-     getProfile(userId) {
+    getProfile(userId) {
         console.log('obsolete method')
         return profileAPI.getProfile(userId)
-    } 
+    }
 }
 
 export const profileAPI = {
-     getProfile(userId) {
+    getProfile(userId) {
         return instance.get(`profile/` + userId)
-    }, 
+    },
 
     getStatus(userId) {
         return instance.get(`/profile/status/${userId}`)
     },
 
     updateStatus(status) {
-        return instance.put(`/profile/status`, { status: status })
+        return instance.put(`profile/status`, { status: status })
+    },
+
+    saveUserPhoto(photo) {
+        let formData = new FormData();
+        formData.set('file', photo);
+
+        return instance.put(`profile/photo`, formData, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        })
     }
-    
 }
 
 export let AuthUserAPI = {
@@ -49,8 +59,8 @@ export let AuthUserAPI = {
         return instance.get(`auth/me`)
     },
 
-    login(email, password, rememberMe=false) {
-        return instance.post(`auth/login`, {email, password, rememberMe})
+    login(email, password, rememberMe = false) {
+        return instance.post(`auth/login`, { email, password, rememberMe })
     },
 
     logout() {
