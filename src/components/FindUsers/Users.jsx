@@ -5,7 +5,7 @@ const Users = ({ totalUsersCount, pageSize, isFetching, onPageChanged, currentPa
 
     return (
         <div>
-            <Paginator totalUsersCount={totalUsersCount} pageSize={pageSize} isFetching={isFetching}
+            <Paginator totalItemsCount={totalUsersCount} pageSize={pageSize} isFetching={isFetching}
                 onPageChanged={onPageChanged} currentPage={currentPage} />
 
             {props.users.map(u => (<div key={u.id}>

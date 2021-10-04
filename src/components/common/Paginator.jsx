@@ -1,28 +1,43 @@
 import s from './Paginator.module.css';
-import Preloader from '../common/Preloader';
+//import Preloader from '../common/Preloader';
+import cn from "classnames";
+import { useState } from 'react';
 
-const Paginator = ({ totalUsersCount, pageSize, isFetching, onPageChanged, currentPage }) => {
-    let pageCount = Math.ceil(totalUsersCount / pageSize);
+
+const Paginator = ({ totalItemsCount, pageSize, onPageChanged, currentPage, portionSize = 10 }) => {
+    let pagesCount = Math.ceil(totalItemsCount / pageSize);
 
     let pages = [];
-    for (let i = 1; i <= pageCount; i++) {
+    for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
 
-    return (
-        <div>
-            <div>
-                {isFetching === true ? <Preloader /> : null}
-            </div>
-            <div>
-                {pages.map(p => {
-                    return <span onClick={(e) => { onPageChanged(p); }} className={currentPage === p && s.selectedPage} key={p.id}> {p}  </span>
+    let portionCount = Math.ceil(pagesCount / portionSize);
+    let [portionNumber, setPortionNumber] = useState(1);
+    let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
+    let rightPortionPageNumber = portionNumber * portionSize;
 
-                })}
-            </div>
 
-        </div>
-    )
+    return <div className={s.paginator}>
+        {portionNumber > 1 &&
+            <button onClick={() => { setPortionNumber(portionNumber - 1) }}>PREV</button>}
+
+        {pages
+            .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
+            .map((p) => {
+                return <span className={cn({
+                    [s.selectedPage]: currentPage === p
+                }, s.pageNumber)}
+                    key={p}
+                    onClick={(e) => {
+                        onPageChanged(p);
+                    }}>{p}</span>
+            })}
+        {portionCount > portionNumber &&
+            <button onClick={() => { setPortionNumber(portionNumber + 1) }}>NEXT</button>}
+
+
+    </div>
 }
 
 export default Paginator

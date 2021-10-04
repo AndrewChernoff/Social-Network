@@ -2,3 +2,11 @@
   width: 100px;
   height: 100px;
 }
+
+.btn {
+  padding: 0 0 0 20px;
+}
+
+.information {
+  padding: 0 0 10px 20px;
+}
