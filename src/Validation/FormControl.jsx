@@ -22,3 +22,9 @@ export const createForm = (name, component, placeholder, validate, type, wrighti
         <Field name={name} component={component} placeholder={placeholder} validate={validate} type={type} /> {wrighting}
     </div>
 }
+
+export const createProfileForm = (name, component, placeholder, validate, type, defaultValue) => {
+    return <div>
+        <Field name={name} component={component} placeholder={placeholder} validate={validate} type={type} defaultValue={defaultValue} />
+    </div>
+}

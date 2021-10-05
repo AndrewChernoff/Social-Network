@@ -6,3 +6,28 @@
 .sendFile {
   padding: 10px 0 10px 0;
 }
+
+.contacts {
+  padding: 20px 0 0 0;
+}
+
+.contactsTitle {
+  font-weight: bold;
+}
+
+.personal {
+  padding: 20px 0 0 0;
+}
+
+.personalInfoDescription {
+  font-weight: bold;
+}
+
+.invalidUrl {
+  color: red;
+  padding: 10px 0 10px 0;
+}
+
+.buttons {
+  padding: 5px 0 0 40px;
+}
