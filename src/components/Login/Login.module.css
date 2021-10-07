@@ -1,0 +1,20 @@
+.wrapper {
+  padding: 0 0 0 20px;
+}
+
+form .btn {
+  padding: 5px 0 10px 0;
+}
+
+form .wrongLogin {
+  color: red;
+}
+
+form .captcha {
+  padding: 10px 0 0 0;
+}
+
+form .captcha img {
+  max-width: 250px;
+  max-height: 150px;
+}

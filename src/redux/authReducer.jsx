@@ -1,13 +1,15 @@
-import { AuthUserAPI } from "../API/api";
+import { AuthUserAPI, securityAPI } from "../API/api";
 
 const SET_USER_DATA = 'samurai-network/SET_USER_DATA';
+const GET_CAPTCHA_URL = 'samurai-network/GET_CAPTCHA_URL';
 
 let initialState = {
     id: null,
     email: null,
     login: null,
     isAuth: false,
-    isWrongLogin: false
+    isWrongLogin: false,
+    captcha: null
 }
 
 const authReducer = (state = initialState, action) => {
@@ -17,12 +19,23 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 ...action.data
             }
+
+        case GET_CAPTCHA_URL:
+            return {
+                ...state,
+                captcha: action.captchaURL
+            }
+
+
+        default:
+            return state;
     }
-    return state;
+
 }
 
 
 export const setUserData = (userId, email, login, isAuth, isWrongLogin) => { return { type: SET_USER_DATA, data: { userId, email, login, isAuth, isWrongLogin } } }
+export const getCaptchaURL = (captchaURL) => { return { type: GET_CAPTCHA_URL, captchaURL } }
 
 export const getAuthUserData = () => async (dispatch) => {
     let response = await AuthUserAPI.me()
@@ -32,12 +45,14 @@ export const getAuthUserData = () => async (dispatch) => {
     }
 }
 
-export const loginUser = (email, password, rememberMe) => async (dispatch) => {
-    let response = await AuthUserAPI.login(email, password, rememberMe)
+export const loginUser = (email, password, rememberMe, captcha) => async (dispatch) => {
+    let response = await AuthUserAPI.login(email, password, rememberMe, captcha)
     if (response.data.resultCode === 0) {
         dispatch(getAuthUserData());
-    } else if (response.data.messages[0] === "Incorrect Email or Password" || "Something wrong") {
+    } else if (response.data.resultCode === 1) {
         dispatch(setUserData(null, null, null, false, true));
+    } else if (response.data.resultCode === 10) {
+        dispatch(getCaptcha());
     }
 }
 
@@ -46,6 +61,11 @@ export const logoutUser = () => async (dispatch) => {
     if (response.data.resultCode === 0) {
         dispatch(setUserData(null, null, null, false, false));
     }
+}
+
+const getCaptcha = () => async (dispatch) => {
+    let response = await securityAPI.getCaptcha();
+    dispatch(getCaptchaURL(response.data.url));
 }
 
 export default authReducer

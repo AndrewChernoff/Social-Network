@@ -1,16 +1,16 @@
 .formControl {
-    color: red;
-    border: red 2px solid;
+  color: red;
+  border: red 2px solid;
 }
 
 .formControl span {
-    color: red;
+  color: red;
 }
 
 .errorSpan {
-    color: red;
+  color: red;
 }
 
-.wrongLogin {
+/* .wrongLogin {
     color: red;
-}
+} */

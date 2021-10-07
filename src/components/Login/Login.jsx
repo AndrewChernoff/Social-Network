@@ -1,15 +1,16 @@
-import { Field, Form } from "react-final-form"
+import { Form } from "react-final-form"
 import { Input } from "../../Validation/FormControl";
 import { required } from "../../Validation/validator";
 import { connect } from 'react-redux';
 import { loginUser } from "../../redux/authReducer";
 import { Redirect } from 'react-router-dom'
-import s from '../../Validation/FormControl.module.css';
+import s from '../Login/Login.module.css';
 import { createForm } from "../../Validation/FormControl";
 
 const Login = (props) => {
     let onSubmit = (e) => {
-        props.loginUser(e.email, e.password, e.rememberMe)
+        debugger
+        props.loginUser(e.email, e.password, e.rememberMe, e.captcha)
     }
 
     if (props.isAuth) return <Redirect to='/profile' />
@@ -17,7 +18,7 @@ const Login = (props) => {
     let wrongLogin = props.isWrongLogin
 
     return (
-        <div>
+        <div className={s.wrapper}>
             <Form
                 onSubmit={onSubmit}
                 render={({ handleSubmit }) => (
@@ -28,11 +29,22 @@ const Login = (props) => {
 
                         {createForm('password', Input, 'password', required, 'password', null)}
 
-                        {createForm('rememberMe', Input, null, null, 'checkbox', 'remember me')}
+                        {createForm('rememberMe', Input, null, null, 'checkbox', 'Remember me')}
+
+                        <div className={s.btn}> <button type="submit">Login</button> </div>
 
                         {wrongLogin ? <div className={s.wrongLogin}> Wrong email or password </div> : undefined}
 
-                        <button type="submit">Login</button>
+
+                        {props.captcha &&
+                            <div className={s.captcha}>
+                                <img src={props.captcha} alt='captcha' />
+                                <div style={{ paddingLeft: 20 }}>
+                                    {createForm('captcha', Input, 'Symbols from image', null, 'text', null)}
+                                </div>
+                            </div>}
+
+
                     </form>
                 )}
             />
@@ -44,7 +56,8 @@ const Login = (props) => {
 let mapStateToProps = (state) => {
     return {
         isAuth: state.userAuth.isAuth,
-        isWrongLogin: state.userAuth.isWrongLogin
+        isWrongLogin: state.userAuth.isWrongLogin,
+        captcha: state.userAuth.captcha
     }
 }
 

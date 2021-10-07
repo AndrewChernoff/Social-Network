@@ -6,7 +6,7 @@ import { required, composeValidators, minValue, maxValue } from './../../../Vali
 import { Textarea } from '../../../Validation/FormControl';
 
 const MyPosts = React.memo(function MyPosts(props) {
-    let postElements = [...props.postElements.posts].reverse().map(p => <Post likeCounter={p.likeCounter} message={p.message} />);
+    let postElements = [...props.postElements.posts].reverse().map(p => <Post likeCounter={p.likeCounter} message={p.message} key={p.id} />);
 
     let onAddPost = (e) => {
         let text = e.text;
